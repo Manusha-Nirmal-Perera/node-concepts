@@ -1,0 +1,15 @@
+{
+  "name": "3-node-pkg-mgr",
+  "version": "1.0.0",
+  "description": "node pkg mgr",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Nirmal",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
