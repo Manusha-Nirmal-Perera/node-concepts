@@ -1,0 +1,2 @@
+Hello, async
+This is a new line
