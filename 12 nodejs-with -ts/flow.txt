@@ -1,0 +1,28 @@
+1 npm init -y
+
+2 npm i typescript @types/node ts-node --save-dev
+
+3 npx tsc --init
+
+4 "lib": ["es6"],
+
+5  "outDir": "./dist",  
+
+6 "rootDir": "./src",  
+
+7  add these after the compilerOptions
+  ,
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+
+8 package.json scripts
+
+    "scripts": {
+        "build" : "tsc",
+        "start": "node dist/app.js",
+        "dev" : "ts-node src/app.ts"
+    },
+
+9 npm run dev
+
+10 npm run build
