@@ -5,7 +5,7 @@ const MONGO_URI=process.env.MONGO_URI
 const connectToDB = async () => {
   try {
     await mongoose.connect(
-      "mongodb+srv://sangammukherjee2022:sangammukherjee2025@cluster0.mohg0.mongodb.net/"
+      process.env.MONGO_URI
     );
     console.log("mongodb is connected successfully !");
   } catch (error) {
