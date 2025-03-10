@@ -67,3 +67,20 @@ const product : Product = {
     title: "pr-01",
     price : 100
 }
+
+//  functions with type annotations
+function add (a : number, b : number) : number{
+    return a + b
+}
+
+//  arrow functions
+
+const multiply =  (a : number, b : number) : number => {
+    return a*b;
+}
+
+function greet(name: string, greeting? : string) : string{
+    return `${name} ${greeting}`
+}
+
+console.log(greet("nirmal", "hello"))
