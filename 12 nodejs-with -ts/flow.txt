@@ -25,4 +25,6 @@
 
 9 npm run dev
 
-10 npm run build
+10 npm run build -> converts ts to js
+npm start -> runs the js file
+npm run dev -> runs the ts file
