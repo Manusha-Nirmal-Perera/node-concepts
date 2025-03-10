@@ -1,86 +1,58 @@
-console.log("Hello nodejs from ts");
+import express, {Express, Request, Response , NextFunction} from "express"
+import { IUser, User } from "./models/User";
+
+const app : Express = express();
+const port = 3000;
 
 
-function getName(name: string) {
-    return name;
+app.use(express.json());
+
+interface CustomRequest extends Request{
+    startTime?: number
 }
 
-console.log(getName("Nirmal"));
-
-
-//  basic types
-
-let isDone: Boolean = false
-
-let num: number = 100;
-
-let str: string = "Nirmal"
-
-let ist: number[] = [1, 2, 3]
-
-let products1: string[] = ["pr-01", "pr-02", "pr-03"]
-// or
-let products2: Array<string> = ["pr-01", "pr-02", "pr-03"]
-
-
-let randomVal: any = 4;
-randomVal = "nirmal"
-randomVal = true
-randomVal = []
-
-let xyz: undefined = undefined
-let yz: null = null
-
-enum Color {
-    Red, Green, Blue
-}
-
-let d: Color = Color.Green
-
-//  tuple
-let abc : [string, number] = ["aa", 1]
-
-// interfaces
-
-// creating a user with the following propeties
-// user -> name, id, email (optional), createdAt (readonly)
+// middleware -> add startTime to request
 interface User {
-    name: String;
-    id : number,
-    email?: string,
-    readonly createdAt: Date
+    name: string,
+    email: string
 }
 
-const user : User = {
-    name: "Nirmal",
-    id: 1,
-    createdAt: new Date()
-}
+app.use((req: CustomRequest, res: Response, next : NextFunction) => {
+    req.startTime = Date.now();
+    next()
+})
 
-//  types
-type Product = {
-    title: string;
-    price : number;
-}
 
-const product : Product = {
-    title: "pr-01",
-    price : 100
-}
 
-//  functions with type annotations
-function add (a : number, b : number) : number{
-    return a + b
-}
+app.get('/', (req : Request, res : Response) => {
+    res.send("Hello TS with express")
+})
 
-//  arrow functions
 
-const multiply =  (a : number, b : number) : number => {
-    return a*b;
-}
+//  post route -> new user -> name, email
+app.post('/user', (req: Request<{}, {}, User>, res : Response)=> {
+    const {name, email} = req.body;
+    res.json({
+        message : `User created ${name}-${email}`
+    })
+})
 
-function greet(name: string, greeting? : string) : string{
-    return `${name} ${greeting}`
-}
+// get user based on id
+app.get('/users/:id', (req : Request<{id:string}>, res : Response) => {
+    const {id} = req.params;
+    res.json({
+        userId: id
+    })
+})
 
-console.log(greet("nirmal", "hello"))
+// get users
+app.get('/', async(req : Request, res: Response)=> {
+    try{
+        const user: IUser[] = await User.find()
+    }catch(e){
+        res.status(400).json({ message: "Some error occured"})
+    }
+})
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+})
